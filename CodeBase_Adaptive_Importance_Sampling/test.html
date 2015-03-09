@@ -1,0 +1,827 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+<title>Climate Prediction Systems</title>
+<meta name="description" content="">
+<meta name="author" content="Prashant Kagwad">
+<link rel="shortcut icon" href="images/ms.ico">
+<link rel="stylesheet" href="css/skeleton-v1.1.css">
+<link rel="stylesheet" href="css/main-r6.css">
+<link rel="stylesheet" href="css/media-queries-r6.css">
+<link rel="stylesheet" href="css/sprites-r6.css">
+<link rel="stylesheet" href="css/default-r6.css">
+<link rel="stylesheet" href="css/firststyle.css">
+<link rel="stylesheet" href="css/table.css" />
+<link rel="stylesheet"
+	href="//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
+<link rel="stylesheet"
+	href="http://code.jquery.com/ui/1.10.0/themes/base/jquery-ui.css" />
+
+<script src="//code.jquery.com/jquery-1.10.2.js"></script>
+<script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+
+<script>
+	var host = "http://localhost:8080/ClimatePredictionSystems";
+
+	var XMLHttpFactories = [ function() {
+		return new XMLHttpRequest();
+	}, function() {
+		return new ActiveXObject("Msxml3.XMLHTTP");
+	}, function() {
+		return new ActiveXObject("Msxml2.XMLHTTP.6.0");
+	}, function() {
+		return new ActiveXObject("Msxml2.XMLHTTP.3.0");
+	}, function() {
+		return new ActiveXObject("Msxml2.XMLHTTP");
+	}, function() {
+		return new ActiveXObject("Microsoft.XMLHTTP");
+	} ];
+
+	function createXMLHTTPObject() {
+
+		var xmlhttp = false;
+
+		for (var i = 0; i < XMLHttpFactories.length; i++) {
+			try {
+				xmlhttp = XMLHttpFactories[i]();
+			} catch (e) {
+				continue;
+			}
+			break;
+		}
+		return xmlhttp;
+	}
+
+	function upload() {
+
+		var xmlhttp = createXMLHTTPObject();
+
+		if (!xmlhttp) {
+			alert("no xmlhttp");
+			return;
+		}
+		
+		var state = document.getElementById("state").value;
+		if(state.length == 0 ){
+			alert("Please select some state!");
+			return;
+		}
+		
+		var yearMonth = document.getElementById("yearMonth").value;
+		if(yearMonth.length == 0){
+			yearMonth = 0;
+		}
+		
+		var avgMaxTemp = document.getElementById("avgMaxTemp").value;
+		if(avgMaxTemp.length == 0){
+			avgMaxTemp = 0;
+		}
+		
+		var departureMaxTemp = document.getElementById("departureMaxTemp").value;
+		if(departureMaxTemp.length == 0){
+			departureMaxTemp = 0;
+		}
+		
+		var avgMinTemp = document.getElementById("avgMinTemp").value;
+		if(avgMinTemp.length == 0){
+			avgMinTemp = 0;
+		}
+		
+		var departureMinTemp = document.getElementById("departureMinTemp").value;
+		if(departureMinTemp.length == 0){
+			departureMinTemp = 0;
+		}
+		
+		var avgTemp = document.getElementById("avgTemp").value;
+		if(avgTemp.length == 0){
+			avgTemp = 0;
+		}
+		
+		var departurefromNormal = document.getElementById("departurefromNormal").value;
+		if(departurefromNormal.length == 0){
+			departurefromNormal = 0;
+		}
+		
+		var avgDewPoint = document.getElementById("avgDewPoint").value;
+		if(avgDewPoint.length == 0 ){
+			avgDewPoint = 0;
+		}
+		
+		var avgWetBulb = document.getElementById("avgWetBulb").value;
+		if(avgWetBulb.length == 0){
+			avgWetBulb = 0;
+		}
+		
+		var heatingDegreeDays = document.getElementById("heatingDegreeDays").value;
+		if(heatingDegreeDays.length == 0){
+			heatingDegreeDays = 0;
+		}
+		
+		var coolingDegreeDays = document.getElementById("coolingDegreeDays").value;
+		if(coolingDegreeDays.length == 0){
+			coolingDegreeDays = 0;
+		}
+		
+		var meanStationPressure = document.getElementById("meanStationPressure").value;
+		if(meanStationPressure.length == 0){
+			meanStationPressure = 0;
+		}
+		
+		var meanSeaLevelPressure = document.getElementById("meanSeaLevelPressure").value;
+		if(meanSeaLevelPressure.length == 0){
+			meanSeaLevelPressure = 0;
+		}
+		
+		var minSeaLevelPressure = document.getElementById("minSeaLevelPressure").value;
+		if(minSeaLevelPressure.length == 0){
+			minSeaLevelPressure = 0;
+		}
+		
+		var totalMonthlyPrecip = document.getElementById("totalMonthlyPrecip").value;
+		if(totalMonthlyPrecip.length == 0){
+			totalMonthlyPrecip = 0;
+		}
+		
+		var totalSnowfall = document.getElementById("totalSnowfall").value;
+		if(totalSnowfall.length == 0){
+			totalSnowfall = 0;
+		}
+		
+		var daysWithPrecip_01 = document.getElementById("daysWithPrecip_01").value;
+		if(daysWithPrecip_01.length == 0){
+			daysWithPrecip_01 = 0;
+		}
+		
+		var daysWithPrecip_10 = document.getElementById("daysWithPrecip_10").value;
+		if(daysWithPrecip_10.length == 0){
+			daysWithPrecip_10 = 0;
+		}
+		
+		var daysWithSnowfall = document.getElementById("daysWithSnowfall").value;
+		if(daysWithSnowfall.length == 0){
+			daysWithSnowfall = 0;
+		}
+		
+		var waterEquivalent = document.getElementById("waterEquivalent").value;
+		if(waterEquivalent.length == 0){
+			waterEquivalent = 0;
+		}
+		
+		var resultantWindSpeed = document.getElementById("resultantWindSpeed").value;
+		if(resultantWindSpeed.length == 0){
+			resultantWindSpeed = 0;
+		}
+		
+		var resultantWindDirection = document.getElementById("resultantWindDirection").value;
+		if(resultantWindDirection.length == 0){
+			resultantWindDirection = 0;
+		}
+		
+		var avgWindSpeed = document.getElementById("avgWindSpeed").value;
+		if(avgWindSpeed.length == 0){
+			avgWindSpeed = 0;
+		}
+
+		var jsonString = {
+			"state" : state,
+			"yearMonth" : yearMonth,
+			"avgMaxTemp" : avgMaxTemp,
+			"departureMaxTemp" : departureMaxTemp,
+			"avgMinTemp" : avgMinTemp,
+			"departureMinTemp" : departureMinTemp,
+			"avgTemp" : avgTemp,
+			"departurefromNormal" : departurefromNormal,
+			"avgDewPoint" : avgDewPoint,
+			"avgWetBulb" : avgWetBulb,
+			"heatingDegreeDays" : heatingDegreeDays,
+			"coolingDegreeDays" : coolingDegreeDays,
+			"meanStationPressure" : meanStationPressure,
+			"meanSeaLevelPressure" : meanSeaLevelPressure,
+			"minSeaLevelPressure" : minSeaLevelPressure,
+			"totalMonthlyPrecip" : totalMonthlyPrecip,
+			"totalSnowfall" : totalSnowfall,
+			"daysWithPrecip_01" : daysWithPrecip_01,
+			"daysWithPrecip_10" : daysWithPrecip_10,
+			"daysWithSnowfall" : daysWithSnowfall,
+			"waterEquivalent" : waterEquivalent,
+			"resultantWindSpeed" : resultantWindSpeed,
+			"resultantWindDirection" : resultantWindDirection,
+			"avgWindSpeed" : avgWindSpeed
+		}
+		var request = JSON.stringify(jsonString);
+
+		alert(request);
+		
+		var url = host + "/uploadData";
+		xmlhttp.open("POST", url, true);
+		xmlhttp.setRequestHeader("Content-type", "application/json");
+		xmlhttp.setRequestHeader("Access-Control-Allow-Origin", "*");
+		xmlhttp.onreadystatechange = function() {
+
+			if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+
+				var response = JSON.parse(xmlhttp.responseText);
+				if (response.status == "Success") {
+					
+					alert("Data uploaded successfully!");
+					reload();
+				} else {
+					
+					alert("Error uploading data.");
+				}
+			}
+		};
+		xmlhttp.send(request);
+		return false; // Do not follow hyperlink
+	}
+</script>
+</head>
+<body>
+
+	<div id="main">
+		<header>
+			<h1 class="heading">Climate Prediction Systems</h1>
+		</header>
+
+		<article id="home">
+			<div class="container">
+				<div class="bottom-gradient between-rows">
+					<span class="left"></span> <span class="center"></span> <span
+						class="right"></span>
+				</div>
+				<center>
+					<form id="myForm" method="post" onsubmit="return()">
+						<table class="">
+							<tr class="strow">
+								<td><label for="state">State</label></td>
+								<td><select id="state">
+										<option selected="selected"></option>
+										<option value="1">Alabama</option>
+										<option value="2">Alaska</option>
+										<option value="3">Arizona</option>
+										<option value="4">Arkansas</option>
+										<option value="5">California</option>
+										<option value="6">Colorado</option>
+										<option value="7">Connecticut</option>
+										<option value="8">Delaware</option>
+										<option value="9">Florida</option>
+										<option value="10">Georgia</option>
+										<option value="11">Hawaii</option>
+										<option value="12">Idaho</option>
+										<option value="13">Ilinois</option>
+										<option value="14">Indiana</option>
+										<option value="15">Iowa</option>
+										<option value="16">Kansas</option>
+										<option value="17">Kentucky</option>
+										<option value="18">Louisiana</option>
+										<option value="19">Maine</option>
+										<option value="20">Maryland</option>
+										<option value="21">Massachusetts</option>
+										<option value="22">Michigan</option>
+										<option value="23">Minnesota</option>
+										<option value="24">Mississippi</option>
+										<option value="25">Missouri</option>
+										<option value="26">Montana</option>
+										<option value="27">Nebraska</option>
+										<option value="28">Nevada</option>
+										<option value="29">New Hampshire</option>
+										<option value="30">New Jersy</option>
+										<option value="31">New Mexico</option>
+										<option value="32">New York</option>
+										<option value="33">North Carolina</option>
+										<option value="34">North Dakota</option>
+										<option value="35">Ohio</option>
+										<option value="36">Oklahoma</option>
+										<option value="37">Oregon</option>
+										<option value="38">Pennsylvania</option>
+										<option value="39">Rhode Island</option>
+										<option value="40">South Carolina</option>
+										<option value="41">South Dakota</option>
+										<option value="42">Tennesse</option>
+										<option value="43">Texas</option>
+										<option value="44">Utah</option>
+										<option value="45">Vermont</option>
+										<option value="46">Virginia</option>
+										<option value="47">Washington</option>
+										<option value="48">West Virginia</option>
+										<option value="49">Wisconsin</option>
+										<option value="50">Wyoming</option>
+										<option value="51">Others</option>
+								</select></td>
+							</tr>
+							<tr class="strow">
+								<td><label for="yearMonth">Year-Month</label></td>
+								<td><select id="yearMonth">
+										<option selected="selected"></option>
+										<option value="92">Dec, 2014</option>
+										<option value="91">Nov, 2014</option>
+										<option value="90">Oct, 2014</option>
+										<option value="89">Sep, 2014</option>
+										<option value="88">Aug, 2014</option>
+										<option value="87">Jul, 2014</option>
+										<option value="86">Jun, 2014</option>
+										<option value="85">May, 2014</option>
+										<option value="84">Apr, 2014</option>
+										<option value="83">Mar, 2014</option>
+										<option value="82">Feb, 2014</option>
+										<option value="81">Jan, 2013</option>
+										<option value="80">Dec, 2013</option>
+										<option value="79">Nov, 2013</option>
+										<option value="78">Oct, 2013</option>
+										<option value="77">Sep, 2013</option>
+										<option value="76">Aug, 2013</option>
+										<option value="75">Jul, 2013</option>
+										<option value="74">Jun, 2013</option>
+										<option value="73">May, 2013</option>
+										<option value="72">Apr, 2013</option>
+										<option value="71">Mar, 2013</option>
+										<option value="70">Feb, 2013</option>
+										<option value="69">Jan, 2013</option>
+										<option value="68">Jan, 2012</option>
+										<option value="67">Dec, 2012</option>
+										<option value="66">Nov, 2012</option>
+										<option value="65">Oct, 2012</option>
+										<option value="64">Sep, 2012</option>
+										<option value="63">Aug, 2012</option>
+										<option value="62">Jul, 2012</option>
+										<option value="61">Jun, 2012</option>
+										<option value="60">May, 2012</option>
+										<option value="59">Apr, 2012</option>
+										<option value="58">Mar, 2012</option>
+										<option value="57">Feb, 2012</option>
+										<option value="56">Jan, 2012</option>
+										<option value="55">Jan, 2011</option>
+										<option value="54">Dec, 2011</option>
+										<option value="53">Nov, 2011</option>
+										<option value="52">Oct, 2011</option>
+										<option value="51">Sep, 2011</option>
+										<option value="50">Aug, 2011</option>
+										<option value="49">Jul, 2011</option>
+										<option value="48">Jun, 2011</option>
+										<option value="47">May, 2011</option>
+										<option value="46">Apr, 2011</option>
+										<option value="45">Mar, 2011</option>
+										<option value="44">Feb, 2011</option>
+										<option value="43">Jan, 2011</option>
+										<option value="42">Jan, 2010</option>
+										<option value="41">Dec, 2010</option>
+										<option value="40">Nov, 2010</option>
+										<option value="39">Oct, 2010</option>
+										<option value="38">Sep, 2010</option>
+										<option value="37">Aug, 2010</option>
+										<option value="36">Jul, 2010</option>
+										<option value="35">Jun, 2010</option>
+										<option value="34">May, 2010</option>
+										<option value="33">Apr, 2010</option>
+										<option value="32">Mar, 2010</option>
+										<option value="31">Feb, 2010</option>
+										<option value="30">Jan, 2010</option>
+								</select></td>
+							</tr>
+							<tr class="strow">
+								<td><label for="AvgMaxTemp">Average Max. Temp</label></td>
+								<td><select id="avgMaxTemp">
+										<option selected="selected"></option>
+										<option value="1">-96 to -87</option>
+										<option value="2">-86 to -77</option>
+										<option value="3">-76 to -67</option>
+										<option value="4">-66 to -57</option>
+										<option value="5">-56 to -47</option>
+										<option value="6">-46 to -37</option>
+										<option value="7">-36 to -27</option>
+										<option value="8">-26 to -17</option>
+										<option value="9">-16 to -07</option>
+										<option value="10">-06 to +04</option>
+										<option value="11">+05 to +14</option>
+										<option value="12">+15 to +24</option>
+										<option value="13">+25 to +34</option>
+										<option value="14">+35 to +44</option>
+										<option value="15">+45 to +54</option>
+										<option value="16">+55 to +64</option>
+										<option value="17">+65 to +74</option>
+										<option value="18">+75 to +84</option>
+										<option value="19">+85 to +94</option>
+										<option value="20">+95 to +104</option>
+										<option value="21">+105 to +114</option>
+										<option value="22">+115 to +124</option>
+										<option value="23">+125 to +134</option>
+								</select></td>
+							</tr>
+							<tr class="strow">
+								<td><label for="DepartureMaxTemp">Departure Max.
+										Temp</label></td>
+								<td><select id="departureMaxTemp">
+										<option selected="selected"></option>
+										<option value="1">-79 to -68</option>
+										<option value="2">-69 to -58</option>
+										<option value="3">-59 to -48</option>
+
+								</select></td>
+							</tr>
+							<tr class="strow">
+								<td><label for="AvgMinTemp">Average Min. Temp</label></td>
+								<td><select id="avgMinTemp">
+										<option selected="selected"></option>
+										<option value="1">-99 to -89</option>
+										<option value="2">-88 to -79</option>
+										<option value="3">-78 to -69</option>
+										<option value="4">-68 to -59</option>
+										<option value="5">-58 to -49</option>
+										<option value="6">-48 to -39</option>
+										<option value="7">-38 to -29</option>
+										<option value="8">-28 to -19</option>
+										<option value="9">-18 to -09</option>
+										<option value="10">-08 to +02</option>
+										<option value="11">+03 to +12</option>
+										<option value="12">+13 to +22</option>
+										<option value="13">+23 to +32</option>
+										<option value="14">+33 to +42</option>
+										<option value="15">+43 to +52</option>
+										<option value="16">+53 to +62</option>
+										<option value="17">+63 to +72</option>
+										<option value="18">+73 to +82</option>
+										<option value="19">+83 to +92</option>
+										<option value="20">+93 to +103</option>
+								</select></td>
+							</tr>
+							</tr>
+							<tr class="strow">
+								<td><label for="DepartureMinTemp">Departure Min.
+										Temp</label></td>
+								<td><select id="departureMinTemp">
+										<option selected="selected"></option>
+
+								</select></td>
+							</tr>
+							<tr class="strow">
+								<td><label for="AvgTemp">Average Temp</label></td>
+								<td><select id="avgTemp">
+										<option selected="selected"></option>
+										<option value="1">-55 to -46</option>
+										<option value="2">-45 to -36</option>
+										<option value="3">-35 to -26</option>
+										<option value="4">-25 to -16</option>
+										<option value="5">-15 to -06</option>
+										<option value="6">-05 to +04</option>
+										<option value="7">+15 to +24</option>
+										<option value="8">+25 to +34</option>
+										<option value="9">+35 to +44</option>
+										<option value="10">+45 to +54</option>
+										<option value="11">+55 to +64</option>
+										<option value="12">+65 to +74</option>
+										<option value="13">+75 to +84</option>
+										<option value="14">+85 to +94</option>
+										<option value="15">+95 to +104</option>
+										<option value="16">+105 to +114</option>
+								</select></td>
+							</tr>
+							<tr class="strow">
+								<td><label for="DeparturefromNormal">Departure from
+										Normal</label></td>
+								<td><select id="departurefromNormal">
+										<option selected="selected"></option>
+										<option value="1">-79 to -70</option>
+										<option value="2">-69 to -60</option>
+										<option value="3">-59 to -50</option>
+										<option value="4">-49 to -40</option>
+										<option value="5">-39 to -30</option>
+										<option value="6">-29 to -20</option>
+										<option value="7">-19 to -10</option>
+										<option value="8">-09 to 0</option>
+										<option value="9">+1 to +10</option>
+										<option value="10">+11 to +20</option>
+										<option value="11">+21 to +30</option>
+										<option value="12">+31 to +40</option>
+										<option value="13">+41 to +50</option>
+										<option value="14">+51 to +62</option>
+										<option value="15">+95 to +104</option>
+								</select></td>
+							</tr>
+							<tr class="strow">
+								<td><label for="AvgDewPoint">Average Dew Point</label></td>
+								<td><select id="avgDewPoint">
+										<option selected="selected"></option>
+										<option value="1">-38 to -29</option>
+										<option value="2">-28 to -19</option>
+										<option value="3">-18 to -09</option>
+										<option value="4">-08 to +01</option>
+										<option value="5">+02 to +11</option>
+										<option value="6">+12 to +21</option>
+										<option value="7">+22 to +31</option>
+										<option value="8">+32 to +41</option>
+										<option value="9">+42 to +51</option>
+										<option value="10">+52 to +61</option>
+										<option value="11">+62 to +81</option>
+								</select></td>
+							</tr>
+							<tr class="strow">
+								<td><label for="AvgWetBulb">Average Wet Bulb</label></td>
+								<td><select id="avgWetBulb">
+										<option selected="selected"></option>
+										<option value="1">-27 to -18</option>
+										<option value="2">-17 to -08</option>
+										<option value="3">-07 to +02</option>
+										<option value="4">+03 to +12</option>
+										<option value="5">+13 to +22</option>
+										<option value="6">+23 to +32</option>
+										<option value="7">+33 to +42</option>
+										<option value="8">+43 to +52</option>
+										<option value="9">+53 to +62</option>
+										<option value="10">+63 to +72</option>
+										<option value="11">+73 to +83</option>
+								</select></td>
+							</tr>
+							<tr class="strow">
+								<td><label for="heatingDegreeDays">Heating Degree
+										Days</label></td>
+								<td><select id="heatingDegreeDays">
+										<option selected="selected"></option>
+										<option value="1">1 to 10</option>
+										<option value="2">11 to 20</option>
+										<option value="3">21 to 30</option>
+										<option value="4">31 to 40</option>
+										<option value="5">41 to 50</option>
+										<option value="6">51 to 60</option>
+										<option value="7">61 to 70</option>
+										<option value="8">71 to 80</option>
+										<option value="9">81 to 90</option>
+										<option value="10">91 to 100</option>
+										<option value="11">101 to 110</option>
+										<option value="12">111 to 120</option>
+								</select></td>
+							</tr>
+							<tr class="strow">
+								<td><label for="coolingDegreeDays">Cooling Degree
+										Days</label></td>
+								<td><select id="coolingDegreeDays">
+										<option selected="selected"></option>
+										<option value="1">1 to 5</option>
+										<option value="2">6 to 10</option>
+										<option value="3">11 to 15</option>
+										<option value="4">16 to 20</option>
+										<option value="5">21 to 25</option>
+										<option value="6">26 to 30</option>
+										<option value="7">31 to 35</option>
+										<option value="8">36 to 40</option>
+										<option value="9">41 to 49</option>
+								</select></td>
+							</tr>
+							<tr class="strow">
+								<td><label for="meanStationPressure">Mean Station
+										Pressure</label></td>
+								<td><select id="meanStationPressure">
+										<option selected="selected"></option>
+										<option value="1">14 to 16</option>
+										<option value="2">16 to 18</option>
+										<option value="3">18 to 20</option>
+										<option value="4">20 to 22</option>
+										<option value="5">22 to 24</option>
+										<option value="6">24 to 26</option>
+										<option value="7">26 to 28</option>
+										<option value="8">28 to 32</option>
+								</select></td>
+							</tr>
+							<tr class="strow">
+								<td><label for="meanSeaLevelPressure">Mean Sea
+										Level Pressure</label></td>
+								<td><select id="meanSeaLevelPressure">
+										<option selected="selected"></option>
+										<option value="1">1</option>
+										<option value="2">2</option>
+										<option value="3">3</option>
+										<option value="4">4</option>
+										<option value="5">5</option>
+										<option value="6">6</option>
+								</select></td>
+							</tr>
+							<tr class="strow">
+								<td><label for="minSeaLevelPressure">Min. Sea Level
+										Pressure</label></td>
+								<td><select id="minSeaLevelPressure">
+										<option selected="selected"></option>
+										<option value="1">0 to 9</option>
+										<option value="2">10 to 18</option>
+										<option value="3">19 to 27</option>
+										<option value="4">28 to 36</option>
+										<option value="5">37 to 45</option>
+										<option value="6">46 to 54</option>
+										<option value="7">55 to 63</option>
+										<option value="8">64 to 72</option>
+										<option value="9">73 to 87</option>
+								</select></td>
+							</tr>
+							<tr class="strow">
+								<td><label for="totalMonthlyPrecip">Total Monthly
+										Precipitation</label></td>
+								<td><select id="totalMonthlyPrecip">
+										<option selected="selected"></option>
+										<option value="1">1 to 10</option>
+										<option value="2">11 to 20</option>
+										<option value="3">21 to 30</option>
+										<option value="4">31 to 40</option>
+										<option value="5">41 to 50</option>
+										<option value="6">51 to 60</option>
+										<option value="7">61 to 70</option>
+										<option value="8">71 to 80</option>
+								</select></td>
+							</tr>
+							<tr class="strow">
+								<td><label for="totalSnowfall">Total Snow fall</label></td>
+								<td><select id="totalSnowfall">
+										<option selected="selected"></option>
+										<option value="1">1 to 10</option>
+										<option value="2">11 to 20</option>
+										<option value="3">21 to 30</option>
+										<option value="4">31 to 40</option>
+										<option value="5">41 to 50</option>
+										<option value="6">51 to 60</option>
+										<option value="7">61 to 70</option>
+										<option value="8">71 to 80</option>
+										<option value="9">81 to 90</option>
+										<option value="9">91 to 100</option>
+										<option value="9">101 to 114</option>
+								</select></td>
+							</tr>
+							<tr class="strow">
+								<td><label for="daysWithPrecip_01">Days With
+										Precipitation _01</label></td>
+								<td><select id="daysWithPrecip_01">
+										<option selected="selected"></option>
+										<option value="1">1 to 10</option>
+										<option value="2">11 to 20</option>
+										<option value="3">21 to 30</option>
+										<option value="4">31 to 40</option>
+										<option value="5">41 to 50</option>
+										<option value="6">51 to 60</option>
+										<option value="7">61 to 70</option>
+										<option value="8">71 to 80</option>
+										<option value="9">81 to 90</option>
+										<option value="9">91 to 100</option>
+										<option value="9">101 to 114</option>
+								</select></td>
+							</tr>
+							<tr class="strow">
+								<td><label for="daysWithPrecip_10">Days With
+										Precipitation _10</label></td>
+								<td><select id="daysWithPrecip_10">
+										<option selected="selected"></option>
+										<option value="1">0 to 9</option>
+										<option value="2">10 to 18</option>
+										<option value="3">19 to 27</option>
+										<option value="4">28 to 36</option>
+										<option value="5">37 to 45</option>
+										<option value="6">46 to 54</option>
+										<option value="7">55 to 63</option>
+										<option value="8">64 to 72</option>
+										<option value="9">73 to 87</option>
+								</select></td>
+							</tr>
+							<tr class="strow">
+								<td><label for="daysWithSnowfall">Days With
+										Snowfall</label></td>
+								<td><select id="daysWithSnowfall">
+										<option selected="selected"></option>
+										<option value="1">1 to 20</option>
+										<option value="2">21 to 40</option>
+										<option value="3">41 to 60</option>
+										<option value="4">61 to 80</option>
+										<option value="5">81 to 100</option>
+										<option value="6">101 to 120</option>
+										<option value="7">121 to 140</option>
+										<option value="8">141 to 160</option>
+										<option value="9">161 to 180</option>
+										<option value="10">181 to 200</option>
+										<option value="11">201 to 220</option>
+										<option value="12">221 to 240</option>
+										<option value="13">241 to 260</option>
+										<option value="14">261 to 280</option>
+										<option value="15">281 to 300</option>
+										<option value="16">301 to 320</option>
+								</select></td>
+							</tr>
+							<tr class="strow">
+								<td><label for="waterEquivalent">Water Equivalent</label></td>
+								<td><select id="waterEquivalent">
+										<option selected="selected"></option>
+										<option value="1">1 to 20</option>
+										<option value="2">21 to 40</option>
+										<option value="3">41 to 60</option>
+										<option value="4">61 to 80</option>
+										<option value="5">81 to 100</option>
+										<option value="6">101 to 120</option>
+										<option value="7">121 to 140</option>
+										<option value="8">141 to 160</option>
+										<option value="9">161 to 180</option>
+										<option value="10">181 to 200</option>
+										<option value="11">201 to 220</option>
+										<option value="12">221 to 240</option>
+										<option value="13">241 to 260</option>
+										<option value="14">261 to 280</option>
+										<option value="15">281 to 300</option>
+										<option value="16">301 to 320</option>
+										<option value="17">321 to 340</option>
+										<option value="18">341 to 360</option>
+										<option value="19">361 to 380</option>
+										<option value="20">381 to 400</option>
+										<option value="21">401 to 420</option>
+								</select></td>
+							</tr>
+							<tr class="strow">
+								<td><label for="resultantWindSpeed">Resultant Wind
+										Speed</label></td>
+								<td><select id="resultantWindSpeed">
+										<option selected="selected"></option>
+										<option value="1">1 to 20</option>
+										<option value="2">21 to 40</option>
+										<option value="3">41 to 60</option>
+										<option value="4">61 to 80</option>
+										<option value="5">81 to 100</option>
+										<option value="6">101 to 120</option>
+										<option value="7">121 to 140</option>
+										<option value="8">141 to 160</option>
+										<option value="9">161 to 180</option>
+										<option value="10">181 to 200</option>
+										<option value="11">201 to 220</option>
+										<option value="12">221 to 240</option>
+										<option value="13">241 to 260</option>
+										<option value="14">261 to 280</option>
+										<option value="15">281 to 300</option>
+										<option value="16">301 to 320</option>
+										<option value="17">321 to 340</option>
+										<option value="18">341 to 360</option>
+								</select></td>
+							</tr>
+							<tr class="strow">
+								<td><label for="resultantWindDirection">Resultant
+										Wind Direction</label></td>
+								<td><select id="resultantWindDirection">
+										<option selected="selected"></option>
+										<option value="1">1 to 20</option>
+										<option value="2">21 to 40</option>
+										<option value="3">41 to 60</option>
+										<option value="4">61 to 80</option>
+										<option value="5">81 to 100</option>
+										<option value="6">101 to 120</option>
+										<option value="7">121 to 140</option>
+										<option value="8">141 to 160</option>
+										<option value="9">161 to 180</option>
+										<option value="10">181 to 200</option>
+										<option value="11">201 to 220</option>
+										<option value="12">221 to 240</option>
+										<option value="13">241 to 260</option>
+										<option value="14">261 to 280</option>
+										<option value="15">281 to 300</option>
+										<option value="16">301 to 320</option>
+								</select></td>
+							</tr>
+							<tr class="strow">
+								<td><label for="avgWindSpeed">Average Wind Speed</label></td>
+								<td><select id="avgWindSpeed">
+										<option selected="selected"></option>
+										<option value="1">1 to 20</option>
+										<option value="2">21 to 40</option>
+										<option value="3">41 to 60</option>
+										<option value="4">61 to 80</option>
+										<option value="5">81 to 100</option>
+										<option value="6">101 to 120</option>
+										<option value="7">121 to 140</option>
+										<option value="8">141 to 160</option>
+										<option value="9">161 to 180</option>
+										<option value="10">181 to 200</option>
+										<option value="11">201 to 220</option>
+										<option value="12">221 to 240</option>
+										<option value="13">241 to 260</option>
+										<option value="14">261 to 280</option>
+										<option value="15">281 to 300</option>
+										<option value="16">301 to 320</option>
+										<option value="17">321 to 340</option>
+										<option value="18">341 to 360</option>
+								</select></td>
+							</tr>
+						</table>
+						<table class="">
+							<tr id="tableRow">
+								<td class="headtext"><input class="headtext" type="button"
+									value="Upload" onclick="upload()" required /></td>
+							</tr>
+						</table>
+					</form>
+				</center>
+			</div>
+		</article>
+		<article id="contact" class="dark">
+			<div class="container">
+				<h3 class="contact">Developed By :</h3>
+				<br /> <br />
+				<p class="contact">Siva Gade, Madhumita Dange, Gaurav Dey,
+					Vishal Desai, Prashant Kagwad, Prasanjit Khuntia & Karan Luniya
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				</p>
+			</div>
+		</article>
+	</div>
+</body>
+</html>
